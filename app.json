@@ -1,0 +1,51 @@
+{
+  "name": "Cisco Cafeteria",
+  "description": "This app does one little thing, and does it well.",
+  "keywords": [
+    "productivity",
+    "NodeJS",
+    "Angular"
+  ],
+  "website": "https://thawing-tor-81992.herokuapp.com/",
+  "repository": "https://git.heroku.com/thawing-tor-81992",
+  "logo": "",
+  "success_url": "/",
+  "scripts": {
+    "postdeploy": "bundle exec rake bootstrap"
+  },
+  "env": {
+    "SECRET_TOKEN": {
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
+    },
+    "WEB_CONCURRENCY": {
+      "description": "The number of processes to run.",
+      "value": "5"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 2,
+      "size": "Performance-M"
+    }
+  },
+  "image": "heroku/ruby",
+  "addons": [
+    "openredis",
+    {
+      "plan": "mongolab:shared-single-small",
+      "as": "MONGO"
+    },
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "9.5"
+      }
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "https://git.heroku.com/thawing-tor-81992"
+    }
+  ]
+}

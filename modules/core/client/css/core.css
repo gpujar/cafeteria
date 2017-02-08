@@ -2,11 +2,11 @@
   margin-top: 50px;
 }
 .page-bg {
-  background-image: url(https://unsplash.it/1000/500?image=733);
+	background: url(../img/clients/home_bg.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
-  min-height: 100%;
-  position: relative;
-  padding: 1em;
 }
 .undecorated-link:hover {
   text-decoration: none;

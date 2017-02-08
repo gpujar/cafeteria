@@ -71,10 +71,7 @@ module.exports = {
       'modules/**/*/img/**/*.jpg',
       'modules/**/*/img/**/*.png',
       'modules/**/*/img/**/*.gif',
-      'modules/**/*/img/**/*.svg',
-      'modules/**/*/images/**/*.gif',
-      'modules/**/*/images/**/*.jpg',
-      'modules/**/*/images/**/*.png'
+      'modules/**/*/img/**/*.svg'
     ],
     views: ['modules/*/client/views/**/*.html'],
     templates: ['build/templates.js']
