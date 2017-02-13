@@ -40,7 +40,7 @@
         controller: 'CarteAdminController',
         controllerAs: 'vm',
         resolve: {
-          carteResolve: newArticle
+          carteResolve: newCarte
         }
       })
       .state('carte.edit', {
@@ -49,22 +49,22 @@
         controller: 'CarteAdminController',
         controllerAs: 'vm',
         resolve: {
-          carteResolve: getArticle
+          carteResolve: getCarte
         }
       });
   }
 
-  getArticle.$inject = ['$stateParams', 'CarteService'];
+  getCarte.$inject = ['$stateParams', 'CarteService'];
 
-  function getArticle($stateParams, CarteService) {
+  function getCarte($stateParams, CarteService) {
     return CarteService.get({
       articleId: $stateParams.articleId
     }).$promise;
   }
 
-  newArticle.$inject = ['CarteService'];
+  newCarte.$inject = ['CarteService'];
 
-  function newArticle(CarteService) {
+  function newCarte(CarteService) {
     return new CarteService();
   }
 
