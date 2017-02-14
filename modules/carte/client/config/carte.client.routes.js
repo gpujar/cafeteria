@@ -29,7 +29,7 @@
         controller: 'CarteController',
         controllerAs: 'vm',
         resolve: {
-          carteResolve: getArticle
+          carteResolve: getCarte
         },
         data: {
           pageTitle: 'Carte {{ articleResolve.title }}'
