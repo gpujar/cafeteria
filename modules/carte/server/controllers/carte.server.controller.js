@@ -31,12 +31,22 @@ exports.create = function (req, res) {
 exports.read = function (req, res) {
   // convert mongoose document to JSON
   var carte = req.carte ? req.carte.toJSON() : {};
-
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  carte.isCurrentUserOwner = !!(req.user && carte.user && carte.user._id.toString() === req.user._id.toString());
+ // carte.isCurrentUserOwner = !!(req.user && carte.user && carte.user._id.toString() === req.user._id.toString());
 
-  res.json(carte);
+  // res.json(carte);
+
+  Carte.find().sort('-created').populate('user', 'displayName').exec(function (err, carte) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(carte);
+    }
+  });
+
 };
 
 /**

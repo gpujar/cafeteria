@@ -17,6 +17,11 @@ module.exports = function (app) {
     .put(carte.update)
     .delete(carte.delete);
 
+    // Single item routes
+  app.route('/api/menu')
+    .get(carte.read);
+
+
   // Finish by binding the carte middleware
-  app.param('articleId', carte.carteByID);
+  app.param('carteId', carte.carteByID);
 };
