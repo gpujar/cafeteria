@@ -12,14 +12,14 @@
       title: 'Customer',
       state: 'customer',
       type: 'dropdown',
-      roles: ['*']
+      roles: ['user']
     });
 
     // Add the dropdown list item
-    menuService.addSubMenuItem('topbar', 'carte', {
+    menuService.addSubMenuItem('topbar', 'customer', {
       title: 'List Customer',
       state: 'customer.list',
-      roles: ['*']
+      roles: ['user']
     });
   }
 }());

@@ -38,7 +38,7 @@
         vm.authentication.user = response;
 
         // And redirect to the previous or home page
-        $state.go($state.previous.state.name || 'home', $state.previous.params);
+        $state.go('carte.create', $state.previous.params);
       }).error(function (response) {
         vm.error = response.message;
       });
@@ -58,7 +58,7 @@
         vm.authentication.user = response;
 
         // And redirect to the previous or home page
-        $state.go($state.previous.state.name || 'home', $state.previous.params);
+        $state.go('carte.create', $state.previous.params);
       }).error(function (response) {
         vm.error = response.message;
       });

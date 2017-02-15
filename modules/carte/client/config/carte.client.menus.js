@@ -12,14 +12,21 @@
       title: 'Carte',
       state: 'carte',
       type: 'dropdown',
-      roles: ['*']
+      roles: ['user']
     });
 
     // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'carte', {
       title: 'List Carte',
       state: 'carte.list',
-      roles: ['*']
+      roles: ['user']
+    });
+
+     // Add the dropdown list item
+    menuService.addSubMenuItem('topbar', 'carte', {
+      title: 'Create Carte',
+      state: 'carte.create',
+      roles: ['user']
     });
   }
 }());
