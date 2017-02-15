@@ -87,7 +87,7 @@
     "gulp-mocha": "~3.0.1",
     "gulp-imagemin": "~2.4.0",
     "gulp-less": "~3.1.0",
-    "gulp-node-inspector": "~0.1.0",
+    "node-inspector": "~0.12.7",
     "imagemin-pngquant": "~5.0.0",
     "istanbul": "~0.4.2",
     "karma": "~0.13.21",
