@@ -59,7 +59,7 @@ exports.read = function (req, res) {
       speech += '\n';
       res.json({
         speech: speech,
-        displayText: speech,
+        text: speech,
         files:['https://s32.postimg.org/rpyc8dukl/9d33d767dfb02e809b83a51605d53c08.jpg'],
         source: 'apiai-webhook-sample'
       });
