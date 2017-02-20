@@ -37,13 +37,27 @@ exports.read = function (req, res) {
 
   // res.json(carte);
 
-  Carte.find().sort('-created').populate('user', 'displayName').exec(function (err, carte) {
+  Carte.find().sort('-created').populate('user', 'displayName').exec(function (err, boat) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(carte);
+      var speech = '';
+      console.log(boat); // Show the HTML for the Google homepage.
+      speech = 'Todays MENU: \n\n';
+       for(var myKey in boat) {
+                           console.log("key:"+myKey+" value:"+boat[myKey].title);
+                           speech += boat[myKey].title;
+                           speech += "\n";
+                        }
+      speech += '\nSelect a option:';
+      speech += '\n';
+      res.json({
+        speech: speech,
+        displayText: speech,
+        source: 'apiai-webhook-sample'
+      });
     }
   });
 
