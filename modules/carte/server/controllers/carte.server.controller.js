@@ -44,18 +44,23 @@ exports.read = function (req, res) {
       });
     } else {
       var speech = '';
+      var images = {};
       console.log(boat); // Show the HTML for the Google homepage.
       speech = 'Todays MENU: \n\n';
-       for(var myKey in boat) {
-                           console.log("key:"+myKey+" value:"+boat[myKey].title);
-                           speech += boat[myKey].title;
-                           speech += "\n";
-                        }
+       for (var myKey in boat) {
+         console.log('key:'+myKey+'value:'+boat[myKey].title);
+         speech += boat[myKey].title;
+         speech += '\n';
+         // if (boat.hasOwnProperty(imageURL)) {
+         //   images[myKey] = boat[myKey].imageUrl;
+         // }
+       }
       speech += '\nSelect a option:';
       speech += '\n';
       res.json({
         speech: speech,
         displayText: speech,
+        files:['https://s32.postimg.org/rpyc8dukl/9d33d767dfb02e809b83a51605d53c08.jpg'],
         source: 'apiai-webhook-sample'
       });
     }
