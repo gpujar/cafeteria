@@ -60,7 +60,7 @@ exports.read = function (req, res) {
       res.json({
         speech: '',
         text: '',
-        files:['http://www.wpclipart.com/food/meals/fast_food/fish_sandwich_small.png','https://www.edojapan.com/assets/HeroImages/food-feature-small.png']
+        file:['http://www.wpclipart.com/food/meals/fast_food/fish_sandwich_small.png']
       });
     }
   });
