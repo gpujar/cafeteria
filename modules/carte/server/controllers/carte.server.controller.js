@@ -58,8 +58,8 @@ exports.read = function (req, res) {
       speech += '\nSelect a option:';
       speech += '\n';
       res.json({
-        speech: 'speech',
-        text: 'speech',
+        speech: speech,
+        text: speech,
         files:['http://www.wpclipart.com/food/meals/fast_food/fish_sandwich_small.png']
       });
     }
