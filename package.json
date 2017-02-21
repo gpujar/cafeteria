@@ -85,6 +85,7 @@
     "gulp-util": "~3.0.7",
     "gulp-load-plugins": "~1.2.0",
     "gulp-less": "~3.1.0",
+    "gulp-livereload": "~3.8.1",
     "gulp-autoprefixer": "~3.1.0",
     "gulp-concat": "~2.6.0",
     "gulp-csslint": "~1.0.0",
