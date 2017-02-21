@@ -60,7 +60,7 @@ exports.read = function (req, res) {
       res.json({
         speech: speech,
         text: speech,
-        files:['https://s32.postimg.org/rpyc8dukl/9d33d767dfb02e809b83a51605d53c08.jpg'],
+        files:['http://www.wpclipart.com/food/meals/fast_food/fish_sandwich_small.png'],
         source: 'apiai-webhook-sample'
       });
     }
