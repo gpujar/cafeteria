@@ -59,7 +59,7 @@ exports.read = function (req, res) {
       speech += '\n';
       res.json({
         speech: speech,
-        text: speech,
+        text: '',
         files:['http://www.wpclipart.com/food/meals/fast_food/fish_sandwich_small.png'],
         source: 'apiai-webhook-sample'
       });
