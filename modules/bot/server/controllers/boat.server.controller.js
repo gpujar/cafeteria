@@ -104,8 +104,8 @@ exports.count = function (req, res) {
      res.json({
         speech: resp.count,
         displayText: resp.count,
-        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Youngkitten.JPG/193px-Youngkitten.JPG",
-        data: {"file": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Youngkitten.JPG/193px-Youngkitten.JPG"},
+        messages:[{"type":3,"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Youngkitten.JPG/193px-Youngkitten.JPG"},
+                    ],
         source: 'spark'
       });
   });
