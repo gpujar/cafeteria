@@ -105,7 +105,8 @@ exports.count = function (req, res) {
         speech: resp.count,
         displayText: resp.count,
         messages:[{"type":3,"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Youngkitten.JPG/193px-Youngkitten.JPG"},
-                    ],
+                  {"type":0,"speech": 'Head Count : '+resp.count}
+                  ],
         source: 'spark'
       });
   });
