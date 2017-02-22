@@ -28,7 +28,7 @@ exports.create = function (req, res) {
 /**
  * Show the current article
  */
-exports.read = function (req, res) {
+exports.count = function (req, res) {
   // convert mongoose document to JSON
   var boat = req.boat ? req.boat.toJSON() : {};
   var boatMenu = req.boat ? req.boat : {};
@@ -113,6 +113,34 @@ exports.update = function (req, res) {
       res.json(boat);
     }
   });
+};
+
+
+/**
+ * Traffic count
+ */
+exports.read = function (req, res) {
+  // convert mongoose document to JSON
+  var boat = req.boat ? req.boat.toJSON() : {};
+  var boatMenu = req.boat ? req.boat : {};
+  boat.isCurrentUserOwner = !!(req.user && boat.user && boat.user._id.toString() === req.user._id.toString());
+  var request = require("request");
+  var options = { method: 'GET',
+  url: 'https://devnetapi.cisco.com/sandbox/mse/api/location/v2/clients/count',
+  headers:
+   { 'postman-token': '9988229e-9ae7-21e7-406d-612f5ad6949d',
+     'cache-control': 'no-cache',
+     authorization: 'Basic bGVhcm5pbmc6bGVhcm5pbmc=' } };
+  request(options, function (error, response, body) {
+    if (error) throw new Error(error);
+    console.log(body);
+     res.json({
+        speech: body.count,
+        displayText: body.count,
+        source: 'apiai-webhook-sample'
+      });
+  });
+
 };
 
 /**

@@ -7,8 +7,8 @@ var boat = require('../controllers/boat.server.controller');
 
 module.exports = function (app) {
   // Carte collection routes
-  app.route('/api/boat')
-    .get(boat.list)
+  app.route('/api/boat/count')
+    .get(boat.count)
     .post(boat.create);
 
   // Single item routes
