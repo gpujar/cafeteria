@@ -18,7 +18,7 @@ module.exports = function (app) {
     .delete(boat.delete);
 
     app.route('/api/boat/menu')
-    .get(boat.read);
+    .post(boat.read);
   // Finish by binding the carte middleware
   app.param('boatId', boat.boatByID);
 };
