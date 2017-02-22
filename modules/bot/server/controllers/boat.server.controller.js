@@ -104,7 +104,7 @@ exports.count = function (req, res) {
      res.json({
         speech: resp.count,
         displayText: resp.count,
-        files: ['http://www.queness.com/resources/images/png/apple_web.png'],
+        data: {'files':['http://www.queness.com/resources/images/png/apple_web.png']},
         source: 'apiai-webhook-sample'
       });
   });
