@@ -28,15 +28,11 @@ exports.create = function (req, res) {
 /**
  * Show the current article
  */
-exports.count = function (req, res) {
+exports.read = function (req, res) {
   // convert mongoose document to JSON
   var boat = req.boat ? req.boat.toJSON() : {};
   var boatMenu = req.boat ? req.boat : {};
-
-  // Add a custom field to the Article, for determining if the current User is the "owner".
-  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
   boat.isCurrentUserOwner = !!(req.user && boat.user && boat.user._id.toString() === req.user._id.toString());
-
   Boat.find().sort('-created').populate('user', 'displayName').exec(function (err, boat) {
     if (err) {
       return res.status(400).send({
@@ -61,38 +57,6 @@ exports.count = function (req, res) {
      // res.json(boat);
     }
   });
-
- // var speech = '';
-               // if (req.result.action === "show-menu") {
-                  //  request('https://ciscafe.herokuapp.com/api/menu', function (error, response, body) {
-                  //    if (!error && response.statusCode == 200) {
-                     //   var data = JSON.parse(boat);
-                     //    console.log(boat); // Show the HTML for the Google homepage.
-                     //    speech = "Todays MENU: \n\n";
-                     //    for(var myKey in boat) {
-                     //       console.log("key:"+myKey+" value:"+boat[myKey]["title"]);
-                     //       speech += boat[myKey]["title"];
-                     //       speech += "\n";
-                     //    }
-                     //    speech += "\nSelect a option:";
-                     //    speech += "\n";
-                     //    res.json({
-                     //        speech: speech,
-                     //        displayText: speech,
-                     //        source: 'apiai-webhook-sample'
-                     //    });
-                     // }
-                   // });
-                 //   console.log('result: ', speech);
-                // }else if(req.result.action === "select-item") {
-                //     speech += 'Your order is confirmed, you will be notified soon';
-                //     res.json({
-                //             speech: speech,
-                //             displayText: speech,
-                //             source: 'apiai-webhook-sample'
-                //         });
-                // }
- // res.json(boat);
 };
 
 /**
@@ -119,7 +83,7 @@ exports.update = function (req, res) {
 /**
  * Traffic count
  */
-exports.read = function (req, res) {
+exports.count = function (req, res) {
   // convert mongoose document to JSON
   var boat = req.boat ? req.boat.toJSON() : {};
   var boatMenu = req.boat ? req.boat : {};
@@ -134,9 +98,12 @@ exports.read = function (req, res) {
   request(options, function (error, response, body) {
     if (error) throw new Error(error);
     console.log(body);
+    var resp = JSON.parse(body);
+    console.log('Giri :: '+resp.count);
+    console.log('Giri :: '+resp.deviceType);
      res.json({
-        speech: body.count,
-        displayText: body.count,
+        speech: resp.count,
+        displayText: resp.count,
         source: 'apiai-webhook-sample'
       });
   });
