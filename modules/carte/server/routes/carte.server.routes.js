@@ -19,7 +19,7 @@ module.exports = function (app) {
 
     // Single item routes
   app.route('/api/menu')
-    .post(carte.read);
+    .get(carte.read);
 
 
   // Finish by binding the carte middleware
