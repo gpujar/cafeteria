@@ -19,7 +19,7 @@ module.exports = function (app) {
 
     // Single item routes
   app.route('/api/menu')
-    .get(carte.read);
+    .post(carte.read);
 
   // Single item routes
   app.route('/api/qrcode')
