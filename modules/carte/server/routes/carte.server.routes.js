@@ -21,6 +21,9 @@ module.exports = function (app) {
   app.route('/api/menu')
     .get(carte.read);
 
+  // Single item routes
+  app.route('/api/qrcode')
+    .get(carte.createQRCode);
 
   // Finish by binding the carte middleware
   app.param('carteId', carte.carteByID);

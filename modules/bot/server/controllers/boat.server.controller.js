@@ -40,10 +40,8 @@ exports.read = function (req, res) {
       });
     } else {
       var speech = '';
-      console.log(boat); // Show the HTML for the Google homepage.
       speech = 'Todays MENU: \n\n';
       for (var myKey in boat) {
-        console.log('key:' + myKey + ' value:' + boat.title);
         speech += boat.title;
         speech += '\n';
       }
@@ -99,8 +97,6 @@ exports.count = function (req, res) {
     if (error) throw new Error(error);
     console.log(body);
     var resp = JSON.parse(body);
-    console.log('Giri :: '+resp.count);
-    console.log('Giri :: '+resp.deviceType);
      res.json({
      //   speech: resp.count,
      //   displayText: resp.count,
