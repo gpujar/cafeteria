@@ -25,6 +25,17 @@ exports.create = function (req, res) {
   });
 };
 
+/*
+ * It generates QR code to image in svg format.
+ */
+exports.createQRCode = function (req, res) {
+  console.log("Log :: Barcode generation ");
+  var qr = require('qr-image');
+  var code = qr.image('ThingQbator', { type: 'svg' }); // new Date().toString()
+  res.type('svg');
+  code.pipe(res);
+};
+
 /**
  * Show the current article
  */
