@@ -8,7 +8,7 @@
   CarteService.$inject = ['$resource'];
 
   function CarteService($resource) {
-    var Carte = $resource('api/carte/:carteId', {
+    var Carte = $resource('api/items/:carteId', {
       carteId: '@_id'
     }, {
       update: {

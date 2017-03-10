@@ -2,24 +2,23 @@
   <div class="page-header">
       <h1>New Item</h1>
   </div>
- <!-- <div class="pull-right">
-    <a class="btn btn-primary" ng-click="vm.remove()">
-      <i class="glyphicon glyphicon-trash"></i>
-    </a>
-  </div> -->
   <div class="col-md-12">
     <form name="vm.form.carteForm" class="form-horizontal" ng-submit="vm.save(vm.form.carteForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
-          <label class="control-label" for="title">Title</label>
-          <input name="title" type="text" ng-model="vm.carte.title" id="title" class="form-control" placeholder="Title" required>
+          <label class="control-label" for="title">Name</label>
+          <input name="title" type="text" ng-model="vm.carte.name" id="title" class="form-control" placeholder="Title" required>
           <div ng-messages="vm.form.carteForm.title.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Article title is required.</p>
+            <p class="help-block error-text" ng-message="required">Item title is required.</p>
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label" for="content">Content</label>
-          <textarea name="content" data-ng-model="vm.carte.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+          <label class="control-label" for="content">Price</label>
+          <textarea name="content" data-ng-model="vm.carte.price" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+        </div>
+          <div class="form-group">
+          <label class="control-label" for="content">Description</label>
+          <textarea name="content" data-ng-model="vm.carte.description" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
         </div>
         <div class="form-group">
           <label class="control-label" for="imageUrl">Image Url</label>

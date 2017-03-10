@@ -24,6 +24,7 @@ module.exports = {
         'public/lib/ng-file-upload/ng-file-upload.min.js',
         'public/lib/ng-img-crop/compile/minified/ng-img-crop.js',
         'public/lib/owasp-password-strength-test/owasp-password-strength-test.js',
+        'public/lib/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js'
         // endbower
       ]
     },
