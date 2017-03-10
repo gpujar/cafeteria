@@ -3,28 +3,19 @@
 /**
  * Module dependencies
  */
-var carte = require('../controllers/carte.server.controller');
+var item = require('../controllers/carte.server.controller');
 
 module.exports = function (app) {
-  // Carte collection routes
-  app.route('/api/carte')
-    .get(carte.list)
-    .post(carte.create);
 
-  // Single item routes
-  app.route('/api/carte/:carteId')
-    .get(carte.read)
-    .put(carte.update)
-    .delete(carte.delete);
+  app.route('/api/items')
+    .get(item.get)
+    .post(item.post);
+  
+  app.use('/api/items/:itemId',item.preId);
 
-    // Single item routes
-  app.route('/api/menu')
-    .post(carte.read);
-
-  // Single item routes
-  app.route('/api/qrcode')
-    .get(carte.createQRCode);
-
-  // Finish by binding the carte middleware
-  app.param('carteId', carte.carteByID);
+  app.route('/api/items/:itemId')
+        .get(item.getId)
+        .put(item.putId)
+        .patch(item.patchId)
+        .delete(item.deleteId);
 };

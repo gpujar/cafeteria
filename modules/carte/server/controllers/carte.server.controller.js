@@ -1,155 +1,148 @@
 'use strict';
 
-/**
- * Module dependencies
- */
 var path = require('path'),
   mongoose = require('mongoose'),
-  Carte = mongoose.model('Carte'),
-  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+  Item = mongoose.model('Item');
 
-/**
- * Create an article
- */
-exports.create = function (req, res) {
-  var carte = new Carte(req.body);
-  carte.user = req.user;
-  carte.save(function (err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.json(carte);
-    }
-  });
-};
+exports.get = function(req,res){
+            //var query = req.query;
+            var query = {};
+            
+            // set query for day
+            if(req.query.day){
+                var day = req.query.day.toLowerCase();
+                if(day == 'monday'){
+                    query.servedOnMonday = true;
+                }else if(day == 'tuesday'){
+                    query.servedOnTuesday = true;
+                }else if(day == 'wednesday'){
+                    query.servedOnWednesday = true;
+                }else if(day == 'thursday'){
+                    query.servedOnThursday = true;
+                }else if(day == 'friday'){
+                    query.servedOnFriday = true;
+                }
+            }
+            
+            if(req.query.servedOnMonday)
+                query.servedOnMonday = (req.query.servedOnMonday == 'true');
 
-/*
- * It generates QR code to image in svg format.
- */
-exports.createQRCode = function (req, res) {
-  console.log("Log :: Barcode generation ");
-  var qr = require('qr-image');
-  var code = qr.image('ThingQbator', { type: 'svg' }); // new Date().toString()
-  res.type('svg');
-  code.pipe(res);
-};
+            if(req.query.servedOnTuesday)
+                query.servedOnTuesday = (req.query.servedOnTuesday == 'true');
 
-/**
- * Show the current article
- */
-exports.read = function (req, res) {
-  // convert mongoose document to JSON
-  var carte = req.carte ? req.carte.toJSON() : {};
-  // Add a custom field to the Article, for determining if the current User is the "owner".
-  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
- // carte.isCurrentUserOwner = !!(req.user && carte.user && carte.user._id.toString() === req.user._id.toString());
+            if(req.query.servedOnWednesday)
+                query.servedOnWednesday = (req.query.servedOnWednesday == 'true');
+            
+            if(req.query.servedOnThursday)
+                query.servedOnThursday = (req.query.servedOnThursday == 'true');
 
-  // res.json(carte);
+            if(req.query.servedOnFriday)
+                query.servedOnFriday = (req.query.servedOnFriday == 'true');
+            
+            // Set query for type
+            if(req.query.isVeg)
+                query.isVeg = (req.query.isVeg == 'true');
+            
+            //Set query for category    
+            if(req.query.category)
+                query.category = req.query.category.toLowerCase();    
+                
+            Item.find(query,function(err,items){
+                if(err){
+                    res.status(500).send(err);
+                }
+                else{
+                    var returnItems = [];
+                    items.forEach(function(element,index,array){
+                        var newItem = element.toJSON();
+                        newItem.links = {};
+                        newItem.links.self = 'http://' + req.headers.host + '/api/items/' + newItem._id;
+                        returnItems.push(newItem);
+                    });
+                    res.json(returnItems);
+                }
+            });
+        };
 
-  Carte.find().sort('-created').populate('user', 'displayName').exec(function (err, boat) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      var speech = '';
-      var images = {};
-      console.log(boat); // Show the HTML for the Google homepage.
-      speech = 'Todays MENU: \n\n';
-       for (var myKey in boat) {
-         console.log('key:'+myKey+'value:'+boat[myKey].title);
-         speech += boat[myKey].title;
-         speech += '\n';
-         // if (boat.hasOwnProperty(imageURL)) {
-         //   images[myKey] = boat[myKey].imageUrl;
-         // }
-       }
-      speech += '\nSelect a option:';
-      speech += '\n';
-      res.json({
-        speech: speech,
-        text: speech,
-        files:['http://www.wpclipart.com/food/meals/fast_food/fish_sandwich_small.png']
-      });
-    }
-  });
+exports.post = function(req,res){
+            var item = new Item(req.body);
+            item.save();
+            res.status(201);
+            res.send(item);
+        };
 
-};
+exports.preId = function(req, res, next){
+        Item.findById(req.params.itemId,function(err,item){
+                if(err) {
+                    res.status(500).send(err);
+                }
+                else if(item) {
+                    req.item = item;
+                    next();
+                }
+                else {
+                    res.status(404).send('No item found');
+                }
+            });
+    };
 
-/**
- * Update an article
- */
-exports.update = function (req, res) {
-  var carte = req.carte;
+exports.getId = function(req,res){
+            var returnItem = req.item.toJSON();
+            returnItem.links = {};
+            returnItem.links.filterByIsVeg = 'http://' + req.headers.host + '/api/items?isVeg =' + returnItem.isVeg;
+            res.json(returnItem);
+        };
 
-  carte.title = req.body.title;
-  carte.content = req.body.content;
+exports.putId = function(req,res){
+            req.item.name = req.body.name;
+            req.item.description = req.body.description;
+            req.item.imageUrl = req.body.imageUrl;
+            req.item.price = req.body.price;
+            req.item.isVeg = req.body.isVeg;
+            req.item.category = req.body.category;
+            req.item.servedOnMonday = req.body.servedOnMonday;
+            req.item.servedOnTuesday = req.body.servedOnTuesday;
+            req.item.servedOnWednesday = req.body.servedOnWednesday;
+            req.item.servedOnThursday = req.body.servedOnThursday;
+            req.item.servedOnFriday = req.body.servedOnFriday;
+                            
+            req.item.save(function(err){
+                if(err){
+                    res.status(500).send(err);
+                }
+                else {
+                    res.json(req.item);
+                }
+            });
+        };
 
-  carte.save(function (err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.json(carte);
-    }
-  });
-};
+exports.patchId = function(req,res){
+            
+            if(req.body._id){
+                delete req.body._id;
+            }
+            
+            for(var p in req.body){
+                req.item[p] = req.body[p];
+            }
+            
+            req.item.save(function(err){
+                if(err){
+                    res.status(500).send(err);
+                }
+                else {
+                    res.json(req.item);
+                }
+            });
+        };
 
-/**
- * Delete an article
- */
-exports.delete = function (req, res) {
-  var carte = req.carte;
-
-  carte.remove(function (err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.json(carte);
-    }
-  });
-};
-
-/**
- * List of Articles
- */
-exports.list = function (req, res) {
-  Carte.find().sort('-created').populate('user', 'displayName').exec(function (err, carte) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.json(carte);
-    }
-  });
-};
-
-/**
- * Carte middleware
- */
-exports.carteByID = function (req, res, next, id) {
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).send({
-      message: 'Carte is invalid'
-    });
-  }
-
-  Carte.findById(id).populate('user', 'displayName').exec(function (err, carte) {
-    if (err) {
-      return next(err);
-    } else if (!carte) {
-      return res.status(404).send({
-        message: 'No carte with that identifier has been found'
-      });
-    }
-    req.carte = carte;
-    next();
-  });
-};
+exports.deleteId = function(req,res){
+            req.item.remove(function(err){
+                if(err){
+                    res.status(500).send(err);
+                }
+                else {
+                    res.status(204).send("Items Removed");
+                }
+            });
+        };

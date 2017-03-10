@@ -6,34 +6,40 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
-/**
- * Carte Schema
- */
-var CarteSchema = new Schema({
-  created: {
-    type: Date,
-    default: Date.now
-  },
-  title: {
-    type: String,
-    default: '',
-    trim: true,
-    required: 'Title cannot be blank'
-  },
-  content: {
-    type: String,
-    default: '',
-    trim: true
-  },
-  imageUrl: {
-    type: String,
-    default: '',
-    trim: true
-  },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  }
+  var itemModel = new Schema({
+    name: {
+        type: String, trim: true
+    },
+    description: {
+        type: String, default: 'Item Description'
+    },
+    imageUrl: {
+        type: String, trim: true
+    },
+    price: {
+        type: Number
+    },
+    isVeg: {
+        type: Boolean, default: true
+    },
+    category: {
+        type: String, enum: ['breakfast','lunch','snacks'], default: 'lunch', trim: true
+    },
+    servedOnMonday: {
+        type: Boolean, default: false
+    },
+    servedOnTuesday: {
+        type: Boolean, default: false
+    },
+    servedOnWednesday: {
+        type: Boolean, default: false
+    },
+    servedOnThursday: {
+        type: Boolean, default: false
+    },
+    servedOnFriday: {
+        type: Boolean, default: false
+    }
 });
 
-mongoose.model('Carte', CarteSchema);
+module.exports = mongoose.model('Item', itemModel);
