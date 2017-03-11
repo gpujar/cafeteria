@@ -22,6 +22,13 @@
       roles: ['user']
     });
 
+       // Display menu
+    menuService.addSubMenuItem('topbar', 'carte', {
+      title: 'Day Menu',
+      state: 'carte.view',
+      roles: ['user']
+    });
+
      // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'carte', {
       title: 'Create Carte',

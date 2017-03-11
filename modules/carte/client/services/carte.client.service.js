@@ -8,8 +8,8 @@
   CarteService.$inject = ['$resource'];
 
   function CarteService($resource) {
-    var Carte = $resource('api/items/:carteId', {
-      carteId: '@_id'
+    var Carte = $resource('api/items/:itemId', {
+      itemId: '@_id'
     }, {
       update: {
         method: 'PUT'
@@ -26,6 +26,8 @@
     return Carte;
 
     function createOrUpdate(carte) {
+      console.log("Giri :: carte._id  "+carte._id);
+      console.trace();
       if (carte._id) {
         return carte.$update(onSuccess, onError);
       } else {

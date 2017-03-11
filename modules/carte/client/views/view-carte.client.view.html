@@ -1,15 +1,25 @@
 <section>
   <div class="page-header">
-    <h1 ng-bind="vm.carte.title"></h1>
+    <h1>Carte List</h1>
   </div>
-  <small>
-    <em class="text-muted">
-      Posted on
-      <span ng-bind="vm.article.created | date:'mediumDate'"></span>
-      by
-      <span ng-if="vm.article.user" ng-bind="vm.article.user.displayName"></span>
-      <span ng-if="!vm.article.user">Deleted User</span>
-    </em>
-  </small>
-  <p class="lead" ng-bind="vm.article.content"></p>
+   <p>Select a Day:</p>
+
+    <select ng-model="vm.day" ng-change="vm.selected(vm.day)">
+    <option ng-repeat="day in vm.days" value="{{day}}">{{day}}</option>
+    </select>
+  <div class="list-group">
+    <a ng-repeat="item in vm.carte" ui-sref="carte.edit({ itemId:item._id })" class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="item.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="item.user" ng-bind="item.user.name"></span>
+        <span ng-if="!item.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="item.name"></h4>
+      <p class="list-group-item-text" ng-bind="item.description">
+      <p class="list-group-item-text" ng-bind="item.price">
+      </p>
+    </a>
+  </div>
 </section>

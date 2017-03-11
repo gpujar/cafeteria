@@ -7,7 +7,7 @@ var path = require('path'),
 exports.get = function(req,res){
             //var query = req.query;
             var query = {};
-            
+            console.log("Giri ::  req.query.day  "+req.query.day)
             // set query for day
             if(req.query.day){
                 var day = req.query.day.toLowerCase();
@@ -23,7 +23,7 @@ exports.get = function(req,res){
                     query.servedOnFriday = true;
                 }
             }
-            
+
             if(req.query.servedOnMonday)
                 query.servedOnMonday = (req.query.servedOnMonday == 'true');
 
@@ -32,21 +32,21 @@ exports.get = function(req,res){
 
             if(req.query.servedOnWednesday)
                 query.servedOnWednesday = (req.query.servedOnWednesday == 'true');
-            
+
             if(req.query.servedOnThursday)
                 query.servedOnThursday = (req.query.servedOnThursday == 'true');
 
             if(req.query.servedOnFriday)
                 query.servedOnFriday = (req.query.servedOnFriday == 'true');
-            
+
             // Set query for type
             if(req.query.isVeg)
                 query.isVeg = (req.query.isVeg == 'true');
-            
-            //Set query for category    
+
+            //Set query for category
             if(req.query.category)
-                query.category = req.query.category.toLowerCase();    
-                
+                query.category = req.query.category.toLowerCase();
+
             Item.find(query,function(err,items){
                 if(err){
                     res.status(500).send(err);
@@ -105,7 +105,7 @@ exports.putId = function(req,res){
             req.item.servedOnWednesday = req.body.servedOnWednesday;
             req.item.servedOnThursday = req.body.servedOnThursday;
             req.item.servedOnFriday = req.body.servedOnFriday;
-                            
+
             req.item.save(function(err){
                 if(err){
                     res.status(500).send(err);
@@ -117,15 +117,15 @@ exports.putId = function(req,res){
         };
 
 exports.patchId = function(req,res){
-            
+
             if(req.body._id){
                 delete req.body._id;
             }
-            
+
             for(var p in req.body){
                 req.item[p] = req.body[p];
             }
-            
+
             req.item.save(function(err){
                 if(err){
                     res.status(500).send(err);

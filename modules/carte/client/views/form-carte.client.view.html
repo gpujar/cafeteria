@@ -3,7 +3,7 @@
       <h1>New Item</h1>
   </div>
   <div class="col-md-12">
-    <form name="vm.form.carteForm" class="form-horizontal" ng-submit="vm.save(vm.form.carteForm.$valid)" novalidate>
+    <form name="vm.form.carteForm" class="form-horizontal" ng-change="vm.save(vm.form.carteForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
           <label class="control-label" for="title">Name</label>

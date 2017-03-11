@@ -24,12 +24,12 @@
         }
       })
       .state('carte.view', {
-        url: '/:carteId',
+        url: '?day',
         templateUrl: 'modules/carte/client/views/view-carte.client.view.html',
         controller: 'CarteController',
         controllerAs: 'vm',
         resolve: {
-          carteResolve: getCarte
+          carteResolve: getDayCarte
         },
         data: {
           pageTitle: 'Carte {{ articleResolve.title }}'
@@ -44,7 +44,7 @@
         }
       })
       .state('carte.edit', {
-        url: '/:articleId/edit',
+        url: '/:itemId',
         templateUrl: 'modules/carte/client/views/form-carte.client.view.html',
         controller: 'CarteAdminController',
         controllerAs: 'vm',
@@ -57,9 +57,23 @@
   getCarte.$inject = ['$stateParams', 'CarteService'];
 
   function getCarte($stateParams, CarteService) {
+    console.log("Giri :: $stateParams.itemId "+$stateParams.itemId);
+    console.trace();
     return CarteService.get({
-      articleId: $stateParams.articleId
+      itemId: $stateParams.itemId
     }).$promise;
+  }
+
+  function getDayCarte($stateParams, CarteService) {
+    console.log("Giri :: $stateParams.day "+$stateParams.day);
+    console.trace();
+    return CarteService.query({
+      day: $stateParams.day || getDay()
+    }).$promise;
+  }
+
+  function getDay() {
+    return 'monday';
   }
 
   newCarte.$inject = ['CarteService'];
