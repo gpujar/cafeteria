@@ -5,15 +5,12 @@ $(document).ready(function() {
 	$('#example').photobooth().on("image", function(event, dataUrl) {
 		//$("#hiddenImg").html('<img src="' + dataUrl + '" >');
 		qrCodeDecoder(dataUrl);
-		//console.log(event);
-		//console.log(dataUrl);
-		//console.log($('#example').data( "photobooth" ));
 	});
 
 	$('#button').click(function() {
 		$('.trigger').trigger('click');
 	});
-	
+
 	qrcode.callback = showInfo;
 
 });

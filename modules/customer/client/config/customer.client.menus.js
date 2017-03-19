@@ -17,7 +17,7 @@
 
     // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'customer', {
-      title: 'List Customer',
+      title: 'QR Code Reader',
       state: 'customer.list',
       roles: ['user']
     });

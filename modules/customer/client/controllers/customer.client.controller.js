@@ -9,7 +9,6 @@
 
   function CustomerController($scope, carte, Authentication) {
     var vm = this;
-
     vm.carte = carte;
     vm.authentication = Authentication;
     vm.error = null;

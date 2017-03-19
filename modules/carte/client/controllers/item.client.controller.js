@@ -8,8 +8,8 @@
   CarteAdminController.$inject = ['$scope', '$state', '$window', 'carteResolve', 'Authentication'];
 
   function CarteAdminController($scope, $state, $window, carteResolve, Authentication) {
-    var vm = this;
 
+    var vm = this;
     vm.carte = carteResolve;
     vm.authentication = Authentication;
     vm.error = null;
@@ -37,7 +37,7 @@
         .catch(errorCallback);
 
       function successCallback(res) {
-        $state.go('carte.list'); // should we send the User to the list or the updated Article's view?
+        $state.go('carte.view'); // should we send the User to the list or the updated Article's view?
       }
 
       function errorCallback(res) {

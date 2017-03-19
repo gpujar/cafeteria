@@ -3,7 +3,7 @@
       <h1>New Item</h1>
   </div>
   <div class="col-md-12">
-    <form name="vm.form.carteForm" class="form-horizontal" ng-change="vm.save(vm.form.carteForm.$valid)" novalidate>
+    <form name="vm.form.carteForm" class="form-horizontal" ng-submit="vm.save(vm.form.carteForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
           <label class="control-label" for="title">Name</label>
@@ -14,18 +14,18 @@
         </div>
         <div class="form-group">
           <label class="control-label" for="content">Price</label>
-          <textarea name="content" data-ng-model="vm.carte.price" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+          <textarea name="content" ng-model="vm.carte.price" id="content" class="form-control" cols="30" rows="1" placeholder="Content"></textarea>
         </div>
           <div class="form-group">
           <label class="control-label" for="content">Description</label>
-          <textarea name="content" data-ng-model="vm.carte.description" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+          <textarea name="content" ng-model="vm.carte.description" id="content" class="form-control" cols="30" rows="5" placeholder="Content"></textarea>
         </div>
         <div class="form-group">
           <label class="control-label" for="imageUrl">Image Url</label>
-          <textarea name="content" data-ng-model="vm.carte.imageUrl" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+          <textarea name="content" ng-model="vm.carte.imageUrl" id="content" class="form-control" cols="30" rows="1" placeholder="Content"></textarea>
         </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-default">Create</button>
+          <button type="submit" class="btn btn-default">Add Item</button>
         </div>
         <div ng-show="vm.error" class="text-danger">
           <strong ng-bind="vm.error"></strong>

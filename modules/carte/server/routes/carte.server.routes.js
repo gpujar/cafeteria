@@ -9,8 +9,9 @@ module.exports = function (app) {
 
   app.route('/api/items')
     .get(item.get)
+    .put(item.createMenu)
     .post(item.post);
-  
+
   app.use('/api/items/:itemId',item.preId);
 
   app.route('/api/items/:itemId')

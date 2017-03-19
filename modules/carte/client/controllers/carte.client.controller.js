@@ -9,14 +9,16 @@
 
   function CarteController($scope, carteResolve, Authentication, CarteService) {
     var vm = this;
-
     vm.carte = carteResolve;
-    vm.days = ['monday','tuesday','wednesday','thursday','friday']
+    vm.days = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+    vm.categories = ['breakfast','lunch','snacks'];
     vm.authentication = Authentication;
     vm.error = null;
-    vm.selected = function (selectedDay) {
+
+    vm.selected = function (selectedDay, selectedCategory) {
       CarteService.query({
-      day: selectedDay || getDay()
+      day: selectedDay || getDay(),
+      category: selectedCategory || getType(),
     }, onSuccess, onError).$promise;
     }
 
@@ -24,9 +26,12 @@
       return 'monday';
     }
 
+    function getType() {
+      return 'snacks';
+    }
+
     // Handle successful response
       function onSuccess(carte) {
-        console.log("On success ");
          vm.carte = carte;
         // Any required internal processing from inside the service, goes here.
       }
@@ -34,7 +39,6 @@
       // Handle error response
       function onError(errorResponse) {
         var error = errorResponse.data;
-        console.log("On error ");
       }
   }
 }());

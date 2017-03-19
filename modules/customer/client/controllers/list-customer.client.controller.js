@@ -9,7 +9,6 @@
 
   function CustomerListController(CarteService) {
     var vm = this;
-
     vm.carte = CarteService.query();
   }
 }());

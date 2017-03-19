@@ -146,3 +146,15 @@ exports.deleteId = function(req,res){
                 }
             });
         };
+
+exports.createMenu = function(req,res){
+        //  const util = require('util');
+       //   console.log(util.inspect(req.body, {depth: null}));
+          for(var i=0; i < req.body.length; i++){
+            var item = new Item(req.body[i]);
+            var category = item.category;
+            item.isNew = false;
+            item.save();
+          }
+          res.status(201);
+} ;

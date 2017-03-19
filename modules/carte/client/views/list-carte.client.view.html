@@ -1,32 +1,24 @@
 <section>
   <div class="page-header">
-    <h1>Carte List</h1>
+    <h1>Create Menu</h1>
   </div>
-  <div class="list-group">
-   <!-- <a ng-repeat="item in vm.carte" ui-sref="carte.view({ articleId: article._id })" class="list-group-item">
-      <small class="list-group-item-text">
-        Posted on
-        <span ng-bind="item.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="item.user" ng-bind="item.user.name"></span>
-        <span ng-if="!item.user">Deleted User</span>
-      </small>
-      <h4 class="list-group-item-heading" ng-bind="item.name"></h4>
-      <p class="list-group-item-text" ng-bind="item.description">
-      <p class="list-group-item-text" ng-bind="item.price">
-      <input type="checkbox" ng-checked="all">Volvo<br>
-      </p>
-    </a>  -->
-      <a ng-repeat="item in vm.carte" ui-sref="carte.edit({ itemId:item._id })"class="list-group-item">
+  <form class="list-group" ng-submit="vm.submitdata(vm.carte)">
+     <p>Select a Day:</p>
+    <select ng-model="vm.day" ng-change="vm.setOption(vm.day, vm.category)">
+    <option ng-repeat="day in vm.days" value="{{day}}">{{day}}</option>
+    </select>
+      <p>Select a Type:</p>
+     <select ng-model="vm.category" ng-change="vm.setOption(vm.day, vm.category)">
+    <option ng-repeat="category in vm.categories" value="{{category}}">{{category}}</option>
+    </select>
+      <div ng-repeat="item in vm.carte" class="list-group-item">
       <label>
-          <input type="checkbox" class="list-group-item-text" ng-model="item.name" ng-true-value="'{{item.name}}'" ng-false-value="'{{item.name}}'">
+          <input type="checkbox" class="list-group-item-text" ng-model="item.check" data-ng-change="vm.setValue(item)">
+      </label>
           <h4 class="list-group-item-heading" ng-bind="item.name"></h4>
           <p class="list-group-item-text" ng-bind="item.price">
           <p class="list-group-item-text" ng-bind="item.description">
-      </label>
-      </a>
-      <div class="form-group">
-          <button type="submit" class="btn btn-default">Create Menu</button>
       </div>
-  </div>
+          <button type="submit" class="btn btn-default" >Create Menu</button>
+  </form>
 </section>

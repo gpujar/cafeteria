@@ -17,21 +17,21 @@
 
     // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'carte', {
-      title: 'List Carte',
+      title: 'Create Menu',
       state: 'carte.list',
       roles: ['user']
     });
 
        // Display menu
     menuService.addSubMenuItem('topbar', 'carte', {
-      title: 'Day Menu',
+      title: 'View Menu',
       state: 'carte.view',
       roles: ['user']
     });
 
      // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'carte', {
-      title: 'Create Carte',
+      title: 'Create Item',
       state: 'carte.create',
       roles: ['user']
     });
