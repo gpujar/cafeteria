@@ -5,9 +5,9 @@
     .module('carte')
     .controller('CarteListController', CarteListController);
 
-  CarteListController.$inject = ['CarteCreateService', 'carteResolve','$resource'];
+  CarteListController.$inject = ['CarteCreateService', '$state', 'carteResolve','$resource'];
 
-  function CarteListController(CarteCreateService, carteResolve, $resource) {
+  function CarteListController(CarteCreateService, $state, carteResolve, $resource) {
     var vm = this;
     vm.service = CarteCreateService;
     vm.carte = vm.service.query();
@@ -24,7 +24,7 @@
 
      // Create a new article, or update the current instance
       function successCallback(res) {
-        $state.go('carte.list'); // should we send the User to the list or the updated Article's view?
+        $state.go('carte.view'); // should we send the User to the list or the updated Article's view?
       }
 
       function errorCallback(res) {

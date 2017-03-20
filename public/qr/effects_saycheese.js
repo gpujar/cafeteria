@@ -4,7 +4,7 @@
 var videoSelect = document.querySelector('select#videoSource');
 
 var gotSources = function (sourceInfos) {
-	// console.log('Detecting user media video sources...');
+	//console.log('Detecting user media video sources...');
 	for (var i = 0; i !== sourceInfos.length; ++i) {
 		var sourceInfo = sourceInfos[i];
 		var option = document.createElement('option');
@@ -13,8 +13,9 @@ var gotSources = function (sourceInfos) {
 			option.text = sourceInfo.label || 'Camera '
 					+ (videoSelect.length);
 			videoSelect.appendChild(option);
+			//console.log('Camera Source detected: ' + option.text);
 		} else {
-			// console.log('Other Source detected: ' + (sourceInfo.label || 'other ' + (videoSelect.length + 1)));
+			//console.log('Other Source detected: ' + (sourceInfo.label || 'other ' + (videoSelect.length + 1)));
 		}
 	}
 };
@@ -22,16 +23,16 @@ var gotSources = function (sourceInfos) {
 // detect user media
 if (typeof MediaStreamTrack === 'undefined'
 		|| typeof MediaStreamTrack.getSources === 'undefined') {
-	// console.log('This browser does not support MediaStreamTrack.');
+	//console.log('This browser does not support MediaStreamTrack.');
 } else {
-	// console.log('MediaStreamTrack supported.');
+	//console.log('MediaStreamTrack supported.');
 	MediaStreamTrack.getSources(gotSources);
 }
 
 var scanner;
 
 function go() {
-	// console.log('go!');
+	//console.log('go!');
 
 	if (scanner) {
 		scanner.stop();
@@ -56,13 +57,13 @@ function go() {
 		scanCode(scanner);
 	});
 
-	// console.log('starting scanner...');
+	//console.log('starting scanner...');
 	scanner.start();
 }
 
 // recursive function for scanning code
 function scanCode(scanner) {
-	// console.log('taking snapshot...');
+	//console.log('taking snapshot...');
 	scanner.takeSnapshot();
 	setTimeout(function () {
 		scanCode(scanner);
@@ -91,17 +92,21 @@ function showInfo(data) {
 // builds a link if there is an uri or a mail address
 function linkify(inputText) {
 	var replacedText, replacePattern1, replacePattern2, replacePattern3;
-	// URLs starting with http://, https://, or ftp://
+
+	//URLs starting with http://, https://, or ftp://
 	replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
 	replacedText = inputText.replace(replacePattern1,
 			'<a href="$1" target="_blank">$1</a>');
-	// URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+
+	//URLs starting with "www." (without // before it, or it'd re-link the ones done above).
 	replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
 	replacedText = replacedText.replace(replacePattern2,
 			'$1<a href="http://$2" target="_blank">$2</a>');
-	// Change email addresses to mailto:: links.
+
+	//Change email addresses to mailto:: links.
 	replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
 	replacedText = replacedText.replace(replacePattern3,
 			'<a href="mailto:$1">$1</a>');
+
 	return replacedText;
 }

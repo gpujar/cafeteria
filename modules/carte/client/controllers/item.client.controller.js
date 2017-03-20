@@ -8,8 +8,8 @@
   CarteAdminController.$inject = ['$scope', '$state', '$window', 'carteResolve', 'Authentication'];
 
   function CarteAdminController($scope, $state, $window, carteResolve, Authentication) {
-
     var vm = this;
+
     vm.carte = carteResolve;
     vm.authentication = Authentication;
     vm.error = null;

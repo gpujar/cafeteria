@@ -10,7 +10,7 @@
  *
  * Depends on video and canvas, and of course, getUserMedia. It's unlikely to work
  * on anything but the newest browsers.
- *
+ * 
  * Small updates: 02.03.2017
  */
 
@@ -49,7 +49,7 @@ var SayCheese = (function () {
 
 		this.setOptions(options);
 		this.element = document.querySelector(element);
-		// console.log('Initialized');
+		//console.log('Initialized');
 		return this;
 	};
 
@@ -68,7 +68,7 @@ var SayCheese = (function () {
 	};
 
 	SayCheese.prototype.trigger = function trigger(evt, data) {
-		// console.log('triggered!');
+		//console.log('triggered!');
 		if (this.events.hasOwnProperty(evt) === false) {
 			return false;
 		}
@@ -94,7 +94,7 @@ var SayCheese = (function () {
 	};
 
 	SayCheese.prototype.createVideo = function createVideo() {
-		// console.log('creating video');
+		//console.log('creating video');
 		var width = this.options.width,
 				height = 0,
 				streaming = false;
@@ -148,17 +148,17 @@ var SayCheese = (function () {
 	/* Start up the stream, if possible */
 	SayCheese.prototype.start = function start() {
 
-		// console.log('starting say-cheese...');
+		//console.log('starting say-cheese...');
 
 		// fail fast and softly if browser not supported
 		if (navigator.getUserMedia === false) {
-			// console.log('failing fast and softly...');
+			//console.log('failing fast and softly...');
 			this.trigger('error', ERRORS.NOT_SUPPORTED);
 			return false;
 		}
 
 		var success = function success(stream) {
-			// console.log('sucess!');
+			//console.log('sucess!');
 			this.stream = stream;
 			this.createVideo();
 
@@ -184,9 +184,11 @@ var SayCheese = (function () {
 
 		/* error is also called when someone denies access */
 		var error = function error(error) {
-			// console.log('access denied');
+			//console.log('access denied');
 			this.trigger('error', error);
 		}.bind(this);
+
+		//console.log('Getting user media...');
 
 		return navigator.getUserMedia({video: {
 				optional: [{
@@ -197,6 +199,7 @@ var SayCheese = (function () {
 
 	SayCheese.prototype.stop = function stop() {
 		this.stream.stop();
+
 		if (window.URL && window.URL.revokeObjectURL) {
 			window.URL.revokeObjectURL(this.video.src);
 		}

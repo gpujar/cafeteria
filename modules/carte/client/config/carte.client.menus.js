@@ -31,7 +31,7 @@
 
      // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'carte', {
-      title: 'Create Item',
+      title: 'Add Item',
       state: 'carte.create',
       roles: ['user']
     });
