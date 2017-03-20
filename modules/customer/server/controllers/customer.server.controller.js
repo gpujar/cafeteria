@@ -6,8 +6,8 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Customer = mongoose.model('Customer'),
-  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
-
+  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+  qrImage = require('qr-image');
 /**
  * Create an article
  */
@@ -113,4 +113,14 @@ exports.customerByID = function (req, res, next, id) {
     req.customer = customer;
     next();
   });
+};
+
+/*
+ * It generates QR code to image in svg format.
+ */
+exports.createQRCode = function (req, res) {
+  console.log('Log :: Barcode generation ');
+  var code = qrImage.image('ThingQbator', { type: 'svg' });
+  res.type('svg');
+  code.pipe(res);
 };

@@ -13,6 +13,7 @@
     vm.carte = carteResolve;
     vm.authentication = Authentication;
     vm.error = null;
+    vm.options = [{name: 'Yes', value: true },{ name: 'No', value: false }];
     vm.form = {};
     vm.remove = remove;
     vm.save = save;

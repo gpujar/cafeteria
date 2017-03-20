@@ -157,4 +157,5 @@ exports.createMenu = function(req,res){
             item.save();
           }
           res.status(201);
+          res.send("Data Saved Successfully ");
 } ;

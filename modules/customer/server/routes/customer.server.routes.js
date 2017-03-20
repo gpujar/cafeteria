@@ -17,6 +17,10 @@ module.exports = function (app) {
     .put(customer.update)
     .delete(customer.delete);
 
+   // QR code image generation.
+  app.route('/api/qrcode')
+    .get(customer.createQRCode);
+
   // Finish by binding the carte middleware
   app.param('customerId', customer.customerByID);
 };

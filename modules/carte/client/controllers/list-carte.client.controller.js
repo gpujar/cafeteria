@@ -19,7 +19,7 @@
     vm.submitdata= function (data) {
       //const util = require('util');
       //console.log(util.inspect(data, {depth: null}));
-      vm.service.update(data);
+      vm.service.update(data,successCallback, errorCallback);
     }
 
      // Create a new article, or update the current instance

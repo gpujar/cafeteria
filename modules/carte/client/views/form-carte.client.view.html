@@ -18,9 +18,7 @@
         </div>
         <div class="form-group">
           <label class="control-label" for="content">Is Veg</label>
-            <select class="form-control" id="vegId" ng-model="vm.carte.isVeg">
-                <option value="true">Yes</option>
-                <option value="false">No</option>
+            <select class="form-control" id="vegId" ng-model="vm.carte.isVeg" ng-options="option.value as option.name for option in vm.options">
             </select>
         </div>
           <div class="form-group">
