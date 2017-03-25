@@ -7,8 +7,8 @@ var bot = require('../controllers/bot.server.controller');
 
 module.exports = function (app) {
   // Carte collection routes
-  app.route('/api/bot/count')
-    .post(bot.count);
+  // app.route('/api/bot/count')
+  //   .post(bot.count);
     //.post(bot.create);
 
   // // Single item routes

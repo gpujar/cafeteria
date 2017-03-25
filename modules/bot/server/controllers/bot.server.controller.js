@@ -211,7 +211,11 @@ exports.read = function(req,res) {
 		case 'order-menu':
 				orderMenuItem(result, res);
 		break;
-		
+
+    case 'check-crowd':
+        count(result, res);
+    break;
+
 		default:
 			console.log("No action defined for this request");
 		break;
@@ -242,12 +246,9 @@ exports.update = function (req, res) {
 
 /**
  * Traffic count
+ * 
  */
-exports.count = function (req, res) {
-  // convert mongoose document to JSON
-  var bot = req.bot ? req.bot.toJSON() : {};
-  var botMenu = req.bot ? req.bot : {};
-  bot.isCurrentUserOwner = !!(req.user && bot.user && bot.user._id.toString() === req.user._id.toString());
+  function count (result, res) {
   var request = require("request");
   var options = { method: 'GET',
   url: 'https://devnetapi.cisco.com/sandbox/mse/api/location/v2/clients/count',
@@ -259,14 +260,12 @@ exports.count = function (req, res) {
     if (error) throw new Error(error);
     console.log(body);
     var resp = JSON.parse(body);
-    console.log('Giri :: '+resp.count);
-    console.log('Giri :: '+resp.deviceType);
+    var speech = {};
+    console.log('HeadCount :: '+resp.count);
+    console.log('DeviceType :: '+resp.deviceType);
+    speech = "Head count right now in Cafeteria is "+resp.count ;
      res.json({
-     //   speech: resp.count,
-     //   displayText: resp.count,
-        messages: [{"type":3,"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Youngkitten.JPG/193px-Youngkitten.JPG"},
-                  {"type":0,"speech": 'Head Count : '+resp.count}
-                  ],
+        speech : speech,     
         source: 'spark'
       });
   });
