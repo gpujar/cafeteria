@@ -25,23 +25,21 @@ exports.create = function (req, res) {
   });
 };
 
-function HandleShowMenu(result, response) {
+function showMenu(result, response) {
 	var query = {};
+  var speech = [];
 	const {
 	date,
-	ItemDetails,
+	Day,
 	Menu,
 	MenuType,
 	MenuCategory
 	} = result.parameters;
 
-	console.log('HandleShowMenu: Menu Type is '+ MenuType);
-	console.log("HandleShowMenu: MenuCategory is "+MenuCategory);
-	/* Determine today's day */
-	var date_today = new Date();
-	var days = ['sunday', 'monday', 'tuesday','wednesday','thursday','friday','saturday'];
-	var today = days[date_today.getDay()];
-	console.log("Todays day is "+today);
+	console.log('showMenu: Menu Type is '+ MenuType);
+	console.log("showMenu: MenuCategory is "+MenuCategory);
+  console.log("showMenu: Day mentioned is "+Day);
+
 	query.category = MenuCategory.toLowerCase();
 	console.log("Query menucategory is "+query.category);
 
@@ -58,48 +56,72 @@ function HandleShowMenu(result, response) {
 		console.log("MenuType is not mentioned, consider both Veg and NonVeg");
 	}
 
-	if(today == 'monday'){
+  var day;
+  if (isEmptyObject(Day)) {
+      /* Determine today's day */
+      var date_today = new Date();
+      var days = ['sunday', 'monday', 'tuesday','wednesday','thursday','friday','saturday'];
+      var today = days[date_today.getDay()];
+      console.log("Todays day is "+today);
+      day = today;
+  }
+  else {
+    day = Day;
+  }
+
+	if(day == 'monday'){
 		query.servedOnMonday = true;
-	}else if(today == 'tuesday'){
+	}else if(day == 'tuesday'){
 	    query.servedOnTuesday = true;
-	}else if(today == 'wednesday'){
+	}else if(day == 'wednesday'){
 	    query.servedOnWednesday = true;
-	}else if(today == 'thursday'){
+	}else if(day == 'thursday'){
 	    query.servedOnThursday = true;
-	}else if(today == 'friday'){
+	}else if(day == 'friday'){
 	    query.servedOnFriday = true;
 	}
 
-	/* Find the menu with the request parsed */
-	Bot.find(query,function(err,items){
-	if(err){
-		response.status(500).send(err);
-	}
-	else{
-		var speech = [];
+  if (day == 'saturday' || day == 'sunday') {
+      speech += "Hey, its a weekend! Its time to relax at home and not be in office :). We do not " +
+                  "have anything for you today,sorry."
+				  	  
+	    response.json({
+			speech: speech,
+			displayText: speech,
+			source: 'spark'
+		  });
+  }
 
-		if (!isEmptyObject(items)){
-			speech += 'Todays menu for '+query.category +': \n';
-		    for (var index in items){
-			  console.log(''+index+ ' '+items[index].name);
-			  speech += items[index].name;
-			  speech += '\n';
-			}
-		}
-		else {
-			speech += 'Sorry, No items for '+query.category +' today';
-		}
-
-		response.json({
-		  speech: speech,
-		  displayText: speech,
-		  source: 'spark'
-		});
-	}
-	});
+  else {
+    /* Find the menu with the request parsed */
+    Bot.find(query,function(err,items){
+    if(err){
+      response.status(500).send(err);
+    }
+    else{
+      if (!isEmptyObject(items)){
+        speech += ' Menu for '+query.category +' on '+day +': \n';
+          for (var index in items){
+          console.log(''+index+ ' '+items[index].name);
+          speech += items[index].name;
+          speech += '\n';
+        }
+      }
+      else {
+        speech += 'Sorry, No items for '+query.category +' today';
+      }
+	  
+	    response.json({
+			speech: speech,
+			displayText: speech,
+			source: 'spark'
+		  });
+    }
+    });
+  }
 }
 
-function DescribeMenuItem(result, response) {
+function describeMenuItem(result, response) {
   const {
       date,
       ItemDetails,
@@ -107,7 +129,9 @@ function DescribeMenuItem(result, response) {
     } = result.parameters;
 
 	var query = {};
+ // var itemName = '/'+MenuItem + '/';
 	query.name = {$regex: MenuItem, $options: 'i'};
+ //query.name = new RegExp('^' + MenuItem + '$',"i");
 
     Bot.find(query,function(err,items){
       if(err){
@@ -119,18 +143,28 @@ function DescribeMenuItem(result, response) {
         console.log("Item Description: "+items[0].description);
         console.log("Items Image URL: "+items[0].imageUrl);
         console.log("Items Price "+items[0].price);
+        console.log("Items is Veg? "+items[0].isVeg);
+
+        var dishType = {};
+        if (items[0].isVeg == true) {
+          dishType = 'Veg';
+        }
+        else {
+          dishType = 'Non Veg';
+        }
 
         response.json({        
         messages: [{"type":3,"imageUrl": items[0].imageUrl},
-                  {"type":0,"speech": "Here are the details of "+items[0].name +": " +items[0].description}
+                  {"type":0,"speech": "Here are the details of "+items[0].name +": \n " +items[0].description 
+                    +"\n" +" Price: "+items[0].price +" , Dish Type:  "+dishType}
                   ],
-        source: 'spark'
+        source: 'spark'        
       });
       }
     });
 }
 
-function OrderMenuItem(result, response) {
+function orderMenuItem(result, response) {
 var speech = {};
    const {
       date,      
@@ -167,15 +201,15 @@ exports.read = function(req,res) {
 	console.log("Read: Action is "+result.action); 
 	switch(result.action) {
 		case 'show-menu':
-				HandleShowMenu(result, res);
+				showMenu(result, res);
 		break;
 		
 		case 'describe-menu':
-				DescribeMenuItem(result, res);
+				describeMenuItem(result, res);
 		break;
 		
 		case 'order-menu':
-				OrderMenuItem(result, res);
+				orderMenuItem(result, res);
 		break;
 		
 		default:
