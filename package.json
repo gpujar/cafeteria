@@ -36,7 +36,6 @@
     "async": "~2.0.1",
     "body-parser": "~1.15.0",
     "bower": "~1.7.7",
-    "canvas": "^1.6.4",
     "cfenv": "~1.0.3",
     "chalk": "~1.1.1",
     "compression": "~1.6.1",
@@ -108,7 +107,6 @@
   "devDependencies": {
     "coveralls": "~2.11.6",
     "eslint": "~2.2.0",
-    "canvas": "^1.6.4",
     "eslint-config-airbnb": "~6.0.2",
     "grunt-concurrent": "~2.0.0",
     "grunt-contrib-copy": "~1.0.0",
