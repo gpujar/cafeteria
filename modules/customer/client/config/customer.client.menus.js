@@ -21,5 +21,12 @@
       state: 'customer.list',
       roles: ['user']
     });
+
+     // Add the dropdown list item to notification
+    menuService.addSubMenuItem('topbar', 'customer', {
+      title: 'Notification',
+      state: 'customer.notify',
+      roles: ['user']
+    });
   }
 }());

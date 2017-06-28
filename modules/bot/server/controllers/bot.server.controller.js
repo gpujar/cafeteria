@@ -6,7 +6,15 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Bot = mongoose.model('Item'),
+  request = require('request'),
+  express = require('express'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+
+var sparkMsgUrl = 'https://api.ciscospark.com/v1/messages';
+var sparkRoomsUrl = 'https://api.ciscospark.com/v1/rooms';
+var imageFile = 'https://s23.postimg.org/w3sambdfv/04_Norththali.png';
+var botAccessToken = 'NWM2NWNkMjUtZjg0MC00NDZiLTkzNmMtN2QzZDAzYWU1NWU4MDVlNTUzZDktZTFj';
+var auth = 'Bearer ' + botAccessToken;
 
 /**
  * Create an article
@@ -84,7 +92,7 @@ function showMenu(result, response) {
   if (day == 'saturday' || day == 'sunday') {
       speech += "Hey, its a weekend! Its time to relax at home and not be in office :). We do not " +
                   "have anything for you today,sorry."
-				  	  
+
 	    response.json({
 			speech: speech,
 			displayText: speech,
@@ -110,7 +118,7 @@ function showMenu(result, response) {
       else {
         speech += 'Sorry, No items for '+query.category +' today';
       }
-	  
+
 	    response.json({
 			speech: speech,
 			displayText: speech,
@@ -153,12 +161,12 @@ function describeMenuItem(result, response) {
           dishType = 'Non Veg';
         }
 
-        response.json({        
+        response.json({
         messages: [{"type":3,"imageUrl": items[0].imageUrl},
-                  {"type":0,"speech": "Here are the details of "+items[0].name +": \n " +items[0].description 
+                  {"type":0,"speech": "Here are the details of "+items[0].name +": \n " +items[0].description
                     +"\n" +" Price: "+items[0].price +" , Dish Type:  "+dishType}
                   ],
-        source: 'spark'        
+        source: 'spark'
       });
       }
     });
@@ -167,7 +175,7 @@ function describeMenuItem(result, response) {
 function orderMenuItem(result, response) {
 var speech = {};
    const {
-      date,      
+      date,
       MenuItem,
       Order
     } = result.parameters;
@@ -198,16 +206,16 @@ exports.read = function(req,res) {
 	result,
 	}= req.body;
 
-	console.log("Read: Action is "+result.action); 
+	//console.log("Read: Action is "+result.action);
 	switch(result.action) {
 		case 'show-menu':
 				showMenu(result, res);
 		break;
-		
+
 		case 'describe-menu':
 				describeMenuItem(result, res);
 		break;
-		
+
 		case 'order-menu':
 				orderMenuItem(result, res);
 		break;
@@ -246,7 +254,7 @@ exports.update = function (req, res) {
 
 /**
  * Traffic count
- * 
+ *
  */
   function count (result, res) {
   var request = require("request");
@@ -265,7 +273,7 @@ exports.update = function (req, res) {
     console.log('DeviceType :: '+resp.deviceType);
     speech = "Head count right now in Cafeteria is "+resp.count ;
      res.json({
-        speech : speech,     
+        speech : speech,
         source: 'spark'
       });
   });
@@ -327,3 +335,55 @@ exports.botByID = function (req, res, next, id) {
     next();
   });
 };
+
+exports.notify = function (req, res) {
+  var notification = req.notification;
+  console.log("response day :: "+req.body.day);
+  console.log("response category :: "+req.body.category);
+  //type = notification.type;
+  notifyMenu(res);
+};
+
+function notifyMenu(res){
+request({
+                      url: sparkRoomsUrl,
+                      method: 'GET',
+                      headers: {'Authorization': auth,'Content-Type': 'application/json'}
+                  }, function (error, response, body) {
+                  if (!error && response.statusCode == 200) {
+                      var rooms = JSON.parse(body);
+                      var numOfRooms = rooms.items.length;
+                      if(numOfRooms > 10) {
+                        numOfRooms = 10;
+                      }
+                      var message = "Testing from web app...";
+                      console.log(message);
+                      for (var i = 0; i < numOfRooms; i++) {
+                          var room = rooms.items[i];
+                          console.log('Name :: '+room.title);
+                          //////////////////////////////////////////////////////////////
+                          request({
+                                  url: sparkMsgUrl,
+                                  method: 'POST',
+                                  headers: {'Authorization': auth,'Content-Type': 'application/json'},
+                                  form: {'roomId': room.id, 'text': message, 'files': imageFile}
+                              }, function (error, response, body) {
+                                console.log('Call back.........response.statusCode '+response.statusCode)
+                              if (!error && response.statusCode == 200) {
+                                  // Print out the response body
+                                  var bodyParse = JSON.parse(body);
+                                  console.log(JSON.stringify(bodyParse, null, 4));
+                              } else if (error) {
+                                  console.log('Error: ' + error);
+                              }
+                          });
+                          //////////////////////////////////////////////////////////////
+                      }
+                  } else if (error) {
+                      console.log('Error: ' + error);
+                  }
+              });
+   res.json({
+
+      });
+}

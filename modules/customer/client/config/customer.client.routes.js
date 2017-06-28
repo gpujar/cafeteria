@@ -23,16 +23,16 @@
           pageTitle: 'Customer List'
         }
       })
-      .state('customer.view', {
-        url: '/:customerId',
+      .state('customer.notify', {
+        url: '',
         templateUrl: 'modules/customer/client/views/view-customer.client.view.html',
         controller: 'CustomerController',
         controllerAs: 'vm',
-        resolve: {
-          customerResolve: getArticle
-        },
+        // resolve: {
+        //   customerResolve: getArticle
+        // },
         data: {
-          pageTitle: 'Customer {{ articleResolve.title }}'
+          pageTitle: 'Notification'
         }
       }).state('customer.create', {
         url: '/create',

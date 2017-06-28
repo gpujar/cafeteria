@@ -7,7 +7,7 @@ var path = require('path'),
 exports.get = function(req,res){
             //var query = req.query;
             var query = {};
-            console.log("Giri ::  req.query.day  "+req.query.day)
+            console.log("req.query.day  "+req.query.day)
             // set query for day
             if(req.query.day){
                 var day = req.query.day.toLowerCase();

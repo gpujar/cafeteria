@@ -26,7 +26,7 @@
     return Carte;
 
     function createOrUpdate(carte) {
-      console.log("Giri :: carte._id  "+carte._id);
+      console.log("carte._id  "+carte._id);
       console.trace();
       if (carte._id) {
         return carte.$update(onSuccess, onError);

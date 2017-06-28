@@ -8,7 +8,7 @@
   CustomerService.$inject = ['$resource'];
 
   function CustomerService($resource) {
-    var Carte = $resource('api/carte/:carteId', {
+    var Carte = $resource('api/bot/menu/notification/:carteId', {
       carteId: '@_id'
     }, {
       update: {

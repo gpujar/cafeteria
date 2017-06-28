@@ -19,6 +19,8 @@ module.exports = function (app) {
 
     app.route('/api/bot/menu')
     .post(bot.read);
+    app.route('/api/bot/menu/notification')
+    .post(bot.notify);
   // Finish by binding the carte middleware
   app.param('botId', bot.botByID);
 };
