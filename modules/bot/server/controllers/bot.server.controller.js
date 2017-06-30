@@ -253,7 +253,7 @@ function count(result, res) {
   var request = require("request");
   var options = {
     method: 'GET',
-    url: 'https://devnetapi.cisco.com/sandbox/mse/api/location/v2/clients/count',
+    url: ' https://cmxlocationsandbox.cisco.com/api/location/v2/clients/count',
     headers: {
       'postman-token': '9988229e-9ae7-21e7-406d-612f5ad6949d',
       'cache-control': 'no-cache',
