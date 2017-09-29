@@ -10,10 +10,6 @@
     "type": "git",
     "url": "https://github.com/meanjs/mean.git"
   },
-  "engines": {
-    "node": ">=0.12.0",
-    "npm": ">=2.0.0"
-  },
   "scripts": {
     "update": "npm update && npm prune && bower install --allow-root && bower prune --allow-root",
     "start": "gulp",
