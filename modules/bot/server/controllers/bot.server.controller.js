@@ -86,15 +86,36 @@ function showMenu(result, response) {
     query.servedOnFriday = true;
   }
 
-  if (day == 'saturday' || day == 'sunday') {
-    speech += 'Hey, its a weekend! Its time to relax at home and not be in office :). We do not ' +
-      'have anything for you today,sorry.'
-    response.json({
-      speech: speech,
-      displayText: speech,
-      source: 'spark'
-    });
-  } else {
+  // if (day == 'saturday' || day == 'sunday') {
+  //   speech += 'Hey, its a weekend! Its time to relax at home and not be in office :). We do not ' +
+  //     'have anything for you today,sorry.'
+  //   response.json({
+  //     speech: speech,
+  //     displayText: speech,
+  //     source: 'spark'
+  //   });
+  // }
+  if(day == 'monday' && isEmptyObject(MenuType)){
+  var query = {};    
+  query.name = {$regex: day + ' ' + MenuCategory.toLowerCase(), $options: 'i'};
+  Bot.find(query, function (err, items) {
+    if (err) {
+      response.status(500).send(err);
+    }
+    else {
+      console.log("Item Name: " + items[0].name);
+      console.log("Items Image URL: " + items[0].imageUrl);
+       response.json({
+        messages: [{"type": 3, "imageUrl": items[0].imageUrl},
+          {
+            "type": 0, "speech": "Here is the details" + items[0].name + ": \n " + items[0].description
+          }
+        ],
+        source: 'spark'
+      });
+    }
+  });
+} else {
     /* Find the menu with the request parsed */
     Bot.find(query, function (err, items) {
       if (err) {
